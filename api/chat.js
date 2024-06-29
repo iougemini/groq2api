@@ -6,6 +6,9 @@ const encoder = new TextEncoder();
 
 const AUTHORIZATION_KEY = "Bearer 你自定义的密钥";
 
+// 模拟 iOS 设备的 User-Agent
+const IOS_USER_AGENT = "Mozilla/5.0 (iPhone; CPU iPhone OS 14_7_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.2 Mobile/15E148 Safari/604.1";
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
@@ -27,7 +30,8 @@ export default async function handler(req, res) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': req.headers.get('Authorization')
+        'Authorization': req.headers.get('Authorization'),
+        'User-Agent': IOS_USER_AGENT  // 添加模拟的 iOS User-Agent
       },
       body: JSON.stringify(requestBody)
     });
